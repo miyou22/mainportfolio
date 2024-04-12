@@ -312,6 +312,16 @@
   right: 0;
   background-color: gray;
  }
+ .referWrap a iframe{
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    background-color: beige;
+    transition: opacity 0.5s linear;
+ }
+ .referLeft:hover > iframe{
+  opacity: 1;
+ }
 /* section4종료 */
 
 /* section5 시작 */
