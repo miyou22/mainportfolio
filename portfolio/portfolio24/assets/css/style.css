@@ -303,14 +303,14 @@
   height: 100%;
   position: absolute;
   left: 0;
-  background-color: purple;
+  background-color: blue;
  }
  .referRight{
   width: 50%;
   height: 100%;
   position: absolute;
   right: 0;
-  background-color: gray;
+  background-color: skyblue;
  }
  .referWrap a iframe{
     width: 100%;
@@ -322,12 +322,58 @@
  .referLeft:hover > iframe{
   opacity: 1;
  }
+ .referRight:hover > iframe{
+  opacity: 1;
+ }
+ .referLeft:hover > .referText{
+  opacity: 0;
+ }
+ .referRight:hover > .referText{
+  opacity: 0;
+ }
+ .referText{
+  font-family: GoldenPlains;
+  font-size: 1rem;
+  position: absolute;
+  /* inset: 50%, 0, 0 , 50%; */
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 1;
+ }
+ .referLeft .referText{
+  color: #ff7f00;
+ }
+
+ .referRight .referText{
+  color: #8a2be2;
+ }
+ .referText em{
+  list-style: 1;
+ }
+ .referText p{
+  font-family: ChosunNm;
+  font-size: 4rem;
+  font-weight: bold;
+  line-height: 1;
+  letter-spacing: 0.4rem;
+ }
+ .referText p:after{
+  content: 'HOVER ME';
+  font-family: ChosunNm;
+  font-size: 1.4vw;
+  display: block;
+  position: relative;
+  margin-top: 2rem;;
+  letter-spacing: 0.1rem;
+ }
+
 /* section4종료 */
 
 /* section5 시작 */
   #section5{
-    height: 100vh;
-    background-color: red;
+    height: 180vh;
+    background-color: beige;
     position: relative;
   }
   #section5 > .inner{
@@ -335,11 +381,12 @@
   }
   .cardWrap{
     width: 70vw;
-    height: 100vh;
+    height: 140vh;
     display: flex;
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
+    margin-top: 0;
   }
 
   .card{
@@ -363,7 +410,8 @@
   .card_content > .card_front,
   .card_content > .card_back {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: flex-start;
     align-items: center;
     position: absolute;
     width: 100%;
@@ -417,3 +465,131 @@
   /* 가로로 뒤집히는 카드 */
   .card_content:hover { transform: rotateY(180deg); }
   .card_content > .card_back { transform: rotateY(180deg); }
+
+  .front_cover{
+    width: 100%;
+    height: 50%;
+    background: url(/portfolio/portfolio24/img/hotel3.jpg);
+    background-size: cover;
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    padding-bottom: 10px;
+    border: 1px solid black;
+  }
+  .card_front h4{
+    width: 100%;
+    height: 30%;
+    font-size: 2rem;
+    position: absolute;
+    top: 60%;
+    color: black;
+    font-family: 'SCoreDream';
+    font-weight: 600
+  }
+  .card_front h6{
+    height: 20%;
+    position: absolute;
+    top: 80%;
+    font-size: 1rem;
+    font-weight: 100;
+    color: black;
+  }
+  .text_content{
+    padding: 1rem;
+    width: 100%;
+    height: 100%;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .text_content h4{
+    font-size: 18px;
+    margin-bottom: 0.3rem;
+  }
+  .text_content p{
+    font-size: 14px;
+    line-height: 1.5;
+  }
+  .text_content hr{
+    color: black;
+    margin-top: 1rem;
+  }
+  .day{
+    display: flex;
+    justify-content: space-between;
+  }
+  .day_button{
+    border: 1px solid black;
+    background-color: orange;
+    border-radius: 5px;
+    padding: 0 0.25rem;
+
+  }
+
+  .text_join{
+    margin-top: 1rem;
+  }
+
+  .text_job h4{
+    margin-top: 0.3rem;
+  }
+  .skill_box{
+    display: flex;
+    justify-content: flex-start;
+    position: relative;
+    height: 2rem;
+  }
+  .skill_tree{
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 0.3rem;
+  }
+  .skill_tree img{
+    width: 30px;
+    height: 30px;
+  }
+
+  #section6{
+    height: 120vh;
+    background-color: greenyellow;
+    position: relative;
+    display: flex;
+    align-items: center;
+
+  }
+  .contactWrap{
+    width: 70vw;
+    border: 1px solid red;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+
+  }
+  .contactTitle{
+    font-size: 5rem;
+    color: blueviolet;
+  }
+  .contactHead{
+    color: white;
+  }
+  .subStroy1{
+    width: 45%;
+    float: left;
+    text-align: left;
+  }
+  .subStroy2{
+    width: 45%;
+    float: right;
+  }
+

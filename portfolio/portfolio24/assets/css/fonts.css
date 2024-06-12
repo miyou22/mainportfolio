@@ -77,6 +77,10 @@
     font-family: 'Modern_No20';
     src: url('../font/MOD20.TTF') format('truetype');
 }
+@font-face {
+    font-family: 'GoldenPlains';
+    src: url('../font/Golden\ Plains.ttf') format('truetype');
+}
 
 @font-face {
     font-family: 'SCoreDream';
