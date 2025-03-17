@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>연속 합 맞추기 게임</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin: 50px; }
+        input, button { font-size: 20px; margin: 10px; padding: 10px; }
+        #numberDisplay { display: none; } /* 숫자 숨기기 */
+    </style>
+</head>
+<body>
+    <h1>연속 합 맞추기 게임</h1>
+    <p><strong>게임 룰:</strong><br>
+        1. 처음에 랜덤한 숫자 두 개가 불립니다.<br>
+        2. 두 숫자의 합을 입력하세요.<br>
+        3. 정답을 맞히면 새로운 숫자가 불립니다.<br>
+        4. 직전에 불렀던 숫자와 합을 입력하세요.<br>
+        5. 총 7번 정답을 맞히면 게임 클리어! 🎉
+    </p><br>
+    <button onclick="startGame()">게임 시작</button>
+    <p id="numberDisplay"></p>
+    <p></p>
+    <input type="number" id="userInput" placeholder="정답 입력">
+    <button onclick="checkAnswer()">확인</button>
+    <p id="result"></p>
+    <p id="history"></p> <!-- 숫자 기록 출력 -->
+    
+    <script>
+        let sequence = [];
+        let step = 0;
+        let maxSteps = 7;
+
+        function getRandomNumber() {
+            return Math.floor(Math.random() * 9) + 1; // 1~9 사이 랜덤 숫자
+        }
+
+        function startGame() {
+            sequence = [getRandomNumber(), getRandomNumber()];
+            step = 0;
+            document.getElementById("userInput").value = "";
+            document.getElementById("result").innerText = "";
+            document.getElementById("history").innerText = "";
+            speakNumbers(sequence[0], sequence[1]);
+        }
+
+        function speakNumbers(...nums) {
+            let speechText = nums.join(" 그리고 ");
+            let speech = new SpeechSynthesisUtterance(speechText);
+            speech.lang = "ko-KR";
+            speech.rate = 0.8;
+            window.speechSynthesis.speak(speech);
+            document.getElementById("numberDisplay").innerText = speechText;
+        }
+
+        function checkAnswer() {
+            let userAnswer = parseInt(document.getElementById("userInput").value);
+            let correctAnswer = sequence[step] + sequence[step + 1];
+            
+            if (userAnswer === correctAnswer) {
+                step++;
+                if (step >= maxSteps) {
+                    document.getElementById("result").innerText = "게임 클리어! 🎉";
+                    displayHistory();
+                    return;
+                }
+                
+                let newNumber = getRandomNumber();
+                sequence.push(newNumber);
+                speakNumbers(newNumber);
+                document.getElementById("userInput").value = "";
+            } else {
+                document.getElementById("result").innerText = "틀렸습니다. 다시 시도하세요!";
+                displayHistory();
+            }
+        }
+
+        function displayHistory() {
+            document.getElementById("history").innerText = "불렀던 숫자: " + sequence.join(", ");
+        }
+    </script>
+</body>
+</html>

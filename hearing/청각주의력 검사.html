@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>청각 주의력 검사</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin: 50px; }
+        input, button { font-size: 20px; margin: 10px; padding: 10px; }
+    </style>
+</head>
+<body>
+    <h1>청각 주의력 검사</h1>
+    <button onclick="generateAndSpeak(1)">LV1 (덧셈, 뺄셈)</button>
+    <button onclick="generateAndSpeak(2)">LV2 (덧셈, 뺄셈, 곱셈, 나눗셈)</button>
+    <button onclick="generateAndSpeak(3)">LV3 (4자리 연산 포함)</button>
+    <br>
+    <input type="text" id="userInput" placeholder="계산 결과를 입력하세요">
+    <button onclick="checkAnswer()">확인</button>
+    <p id="result"></p>
+    
+    <p>음성 속도 조절:</p>
+    <button onclick="adjustSpeechRate(-0.1)">-</button>
+    <span id="speechRateDisplay">0.6</span>
+    <button onclick="adjustSpeechRate(0.1)">+</button>
+    
+    <script>
+        let currentExpression = "";
+        let correctAnswer = 0;
+        let speechRate = 0.6;
+
+        function generateAndSpeak(level) {
+            document.getElementById("userInput").value = ""; // 입력창 초기화
+            let numbers = [];
+            let operators = [];
+            let min = 1, max = 99;
+            
+            if (level === 1) {
+                operators = ['+', '-'];
+            } else if (level === 2) {
+                operators = ['+', '-', '*', '/'];
+            } else if (level === 3) {
+                operators = ['+', '-', '*', '/'];
+                max = 9999;
+            }
+            
+            let expression = "";
+            let spokenExpression = "";
+            let validResult = false;
+            
+            while (!validResult) {
+                expression = "";
+                spokenExpression = "";
+                
+                for (let i = 0; i < 10; i++) {
+                    let num = Math.floor(Math.random() * (max - min + 1)) + min;
+                    numbers.push(num);
+                    expression += num;
+                    spokenExpression += num;
+                    
+                    if (i < 9) { // 숫자 10개, 연산자는 9개만 삽입
+                        let op = operators[Math.floor(Math.random() * operators.length)];
+                        expression += " " + op + " ";
+                        spokenExpression += " " + convertOperator(op) + " ";
+                    }
+                }
+                
+                try {
+                    correctAnswer = eval(expression.replace(/ /g, ''));
+                    if (correctAnswer > 0) {
+                        validResult = true;
+                    }
+                } catch (error) {
+                    validResult = false;
+                }
+            }
+            
+            currentExpression = expression;
+            
+            let speech = new SpeechSynthesisUtterance(spokenExpression);
+            speech.lang = "ko-KR";
+            speech.rate = speechRate;
+            window.speechSynthesis.speak(speech);
+            console.log("출제된 식:", expression);
+            console.log("음성 출력:", spokenExpression);
+        }
+
+        function convertOperator(op) {
+            switch (op) {
+                case '+': return '더하기';
+                case '-': return '빼기';
+                case '*': return '곱하기';
+                case '/': return '나누기';
+                default: return op;
+            }
+        }
+
+        function checkAnswer() {
+            let userAnswer = document.getElementById("userInput").value;
+            if (parseFloat(userAnswer) === correctAnswer) {
+                document.getElementById("result").innerText = "정답입니다! ✅";
+            } else {
+                document.getElementById("result").innerText = "틀렸습니다. 정답: " + correctAnswer;
+            }
+        }
+
+        function adjustSpeechRate(change) {
+            speechRate = Math.max(0.1, Math.min(2, speechRate + change)); // 속도 범위 제한 (0.1 ~ 2)
+            document.getElementById("speechRateDisplay").innerText = speechRate.toFixed(1);
+        }
+    </script>
+</body>
+</html>
